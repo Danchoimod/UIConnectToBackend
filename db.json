@@ -1,16 +1,66 @@
 {
-    "users":[
-        {
-            "id":1,
-            "name":"nguyenvanteo1"
-        },
-        {
-            "id":2,
-            "name":"nguyenvanteo1"
-        },
-        {
-            "id":3,
-            "name":"nguyenvanteo1"
-        }
-    ]
+  "navitem": [
+    {
+      "id": 1,
+      "name": "windows",
+      "icon": "/icons/start.png"
+    },
+    {
+      "id": 2,
+      "name": "search",
+      "icon": "/icons/search-dark.png"
+    },
+    {
+      "id": 3,
+      "name": "taskview",
+      "icon": "/icons/widget.png"
+    },
+    {
+      "id": 4,
+      "name": "explorer",
+      "icon": "/icons/explorer.png"
+    },
+    {
+      "id": 5,
+      "name": "edge",
+      "icon": "/icons/edge.png"
+    },
+    {
+      "id": 6,
+      "name": "store",
+      "icon": "/icons/store-dark.png"
+    },
+    {
+      "id": 7,
+      "name": "vscode",
+      "icon": "/icons/vscode.png"
+    }
+  ],
+  "workspace": [
+    {
+      "id": 1,
+      "name": "file-explorer",
+      "icon": "/icons/file-explorer.png"
+    },
+    {
+      "id": 2,
+      "name": "search",
+      "icon": "/icons/search.png"
+    },
+    {
+      "id": 3,
+      "name": "git",
+      "icon": "/icons/git.png"
+    },
+    {
+      "id": 4,
+      "name": "debug",
+      "icon": "/icons/debug.png"
+    },
+    {
+      "id": 5,
+      "name": "extensions",
+      "icon": "/icons/extensions.png"
+    }
+  ]
 }
