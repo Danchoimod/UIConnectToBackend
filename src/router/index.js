@@ -1,13 +1,35 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-const Home = () => import('@/views/HomePage.vue')
-const Bai3 = () => import('@/components/Bai3.vue')
-const Bai4 = () => import('@/components/Bai4.vue')
+const Home = () => import('@/views/user/HomePage.vue')
 
 const routes = [
   { path: '/', name: 'HomePage', component: Home },
-  { path: '/bai3', name: 'Bai3', component: Bai3 },
-  { path: '/bai4', name: 'Bai4', component: Bai4 },
+  { path: '/admin', name: 'Admin', component: () => import('@/views/admin/Dashboard.vue') },
+  {
+    path: '/admin/users/list',
+    name: 'UserManager',
+    component: () => import('@/views/admin/Usermanager/Userlist.vue'),
+  },
+  {
+    path: '/admin/apps/add',
+    name: 'AddApp',
+    component: () => import('@/views/admin/Appmanager/AddApp.vue'),
+  },
+  {
+    path: '/admin/apps/list',
+    name: 'AppList',
+    component: () => import('@/views/admin/Appmanager/AppList.vue'),
+  },
+  {
+    path: '/admin/comments',
+    name: 'CommentManager',
+    component: () => import('@/views/admin/Commentmanager.vue'),
+  },
+  {
+    path: '/admin/users/add',
+    name: 'AddUser',
+    component: () => import('@/views/admin/Usermanager/Adduser.vue'),
+  },
 ]
 
 export default createRouter({

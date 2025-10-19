@@ -1,16 +1,36 @@
 {
-    "users":[
-        {
-            "id":1,
-            "name":"nguyenvanteo1"
-        },
-        {
-            "id":2,
-            "name":"nguyenvanteo1"
-        },
-        {
-            "id":3,
-            "name":"nguyenvanteo1"
-        }
-    ]
+  "users": [
+    {
+      "id": "2042",
+      "name": "a",
+      "email": "b@gmail.co",
+      "password": "",
+      "isAdmin": false
+    },
+    {
+      "id": "42a6",
+      "name": "a",
+      "email": "b@gmail.co",
+      "password": "12",
+      "isAdmin": false
+    }
+  ],
+  "apps": [
+    {
+      "id": "0e31",
+      "name": "23423",
+      "description": "4324"
+    },
+    {
+      "id": "20ff",
+      "name": "342",
+      "description": "23423"
+    },
+    {
+      "id": "5268",
+      "name": "34",
+      "description": "234",
+      "image": ""
+    }
+  ]
 }
