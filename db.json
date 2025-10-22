@@ -1,66 +1,27 @@
 {
-  "navitem": [
+  "posts": [
     {
-      "id": 1,
-      "name": "windows",
-      "icon": "/icons/start.png"
+      "id": "1",
+      "title": "Thời trang xuân 2222",
+      "content": "Xu hướng áo phông pastel...",
+      "image": "https://res.cloudinary.com/dqqtiwfnw/image/upload/v1760431827/j1i7gttedtbmnar0zoy6.webp",
+      "author": "Admin"
     },
     {
-      "id": 2,
-      "name": "search",
-      "icon": "/icons/search-dark.png"
+      "id": "2",
+      "title": "Thời trang hạ 2025",
+      "content": "Phong cách năng động và tươi mới...",
+      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1761119394/lezzjknq0r0e31skonzc.jpg",
+      "author": "Admin"
     },
     {
-      "id": 3,
-      "name": "taskview",
-      "icon": "/icons/widget.png"
-    },
-    {
-      "id": 4,
-      "name": "explorer",
-      "icon": "/icons/explorer.png"
-    },
-    {
-      "id": 5,
-      "name": "edge",
-      "icon": "/icons/edge.png"
-    },
-    {
-      "id": 6,
-      "name": "store",
-      "icon": "/icons/store-dark.png"
-    },
-    {
-      "id": 7,
-      "name": "vscode",
-      "icon": "/icons/vscode.png"
+      "id": "3",
+      "title": "Thời trang thu 2025",
+      "content": "Sắc màu ấm áp cho mùa thu...",
+      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1761119701/hsfirapwrxijotksyzgh.ico",
+      "author": "23432"
     }
   ],
-  "workspace": [
-    {
-      "id": 1,
-      "name": "file-explorer",
-      "icon": "/icons/file-explorer.png"
-    },
-    {
-      "id": 2,
-      "name": "search",
-      "icon": "/icons/search.png"
-    },
-    {
-      "id": 3,
-      "name": "git",
-      "icon": "/icons/git.png"
-    },
-    {
-      "id": 4,
-      "name": "debug",
-      "icon": "/icons/debug.png"
-    },
-    {
-      "id": 5,
-      "name": "extensions",
-      "icon": "/icons/extensions.png"
-    }
-  ]
+  "products": [],
+  "users": []
 }
