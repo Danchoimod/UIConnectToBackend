@@ -3,7 +3,7 @@
     <!-- Sidebar -->
     <aside class="sidebar bg-dark text-light p-3 d-flex flex-column" style="flex: 0 0 20%">
       <div class="sidebar-header mb-4">
-        <h4 class="mb-0">Admin Panel</h4>
+        <h4 class="mb-0 cursor-pointer" @click="goHome" style="cursor: pointer">Admin Panel</h4>
       </div>
 
       <!-- Menu -->
@@ -94,7 +94,7 @@
 
       <!-- Logout Button -->
       <div class="sidebar-footer mt-4">
-        <button class="btn btn-danger w-100">
+        <button class="btn btn-danger w-100" @click="logout">
           <i class="bi bi-box-arrow-right me-2"></i> Đăng xuất
         </button>
       </div>
@@ -113,14 +113,41 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import AdminNavbar from '@/components/admin/AdminNavbar.vue'
 
-export default {
-  name: 'AdminPanel',
-  components: {
-    AdminNavbar,
-  },
+const router = useRouter()
+
+onMounted(() => {
+  // Kiểm tra localStorage khi component được mount
+  const user = localStorage.getItem('user')
+  if (!user) {
+    // Không có thông tin đăng nhập
+    alert('Bạn cần đăng nhập để truy cập trang Admin!')
+    router.push('/')
+    return
+  }
+
+  const userData = JSON.parse(user)
+  if (!userData.isAdmin) {
+    // Không có quyền admin
+    alert('Bạn không có quyền truy cập trang Admin!')
+    router.push('/')
+  }
+})
+
+const goHome = () => {
+  router.push('/')
+}
+
+const logout = () => {
+  // Xóa localStorage
+  localStorage.removeItem('user')
+  alert('Đã đăng xuất!')
+  // Chuyển về trang chính
+  router.push('/')
 }
 </script>
 

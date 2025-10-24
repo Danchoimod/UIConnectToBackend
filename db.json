@@ -1,36 +1,354 @@
 {
   "users": [
     {
-      "id": "2042",
-      "name": "a",
-      "email": "b@gmail.co",
-      "password": "",
-      "isAdmin": false
+      "id": "15ca",
+      "name": "Admin",
+      "email": "admin@gmail.com",
+      "password": "1",
+      "isAdmin": true,
+      "avatar": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1760891376/dwju7n6vltsosnloyzdb.png"
     },
     {
-      "id": "42a6",
-      "name": "a",
-      "email": "b@gmail.co",
-      "password": "12",
-      "isAdmin": false
+      "id": "8cd6",
+      "name": "Nguyễn Văn A",
+      "email": "user@gmail.com",
+      "password": "1",
+      "isAdmin": false,
+      "avatar": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1760949798/wgztyaatrfrzl0pbkgxd.jpg",
+      "suspended": true
+    },
+    {
+      "id": "7b27",
+      "name": "mod",
+      "email": "admin1@gmail.com",
+      "password": "1",
+      "avatar": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1761281976/lxntb518utak8igdrtv4.ico",
+      "isAdmin": false,
+      "suspended": true
+    },
+    {
+      "id": "763a",
+      "name": "A",
+      "email": "a@gmail.com",
+      "password": "1",
+      "avatar": "",
+      "isAdmin": false,
+      "suspended": true
+    },
+    {
+      "id": "a1ee",
+      "name": "Nguyễn Văn A",
+      "email": "admin@gmail.com",
+      "password": "1",
+      "isAdmin": true,
+      "avatar": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1761290496/bqgfsknhschxcpgilipb.jpg",
+      "suspended": true
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat1",
+      "name": "Hành động",
+      "icon": "bi-controller"
+    },
+    {
+      "id": "cat2",
+      "name": "Phiêu lưu",
+      "icon": "bi-map"
+    },
+    {
+      "id": "cat3",
+      "name": "Giải trí",
+      "icon": "bi-film"
+    },
+    {
+      "id": "cat4",
+      "name": "Giáo dục",
+      "icon": "bi-book"
+    },
+    {
+      "id": "cat5",
+      "name": "Công cụ",
+      "icon": "bi-tools"
+    },
+    {
+      "id": "cat6",
+      "name": "Mạng xã hội",
+      "icon": "bi-people"
     }
   ],
   "apps": [
     {
-      "id": "0e31",
-      "name": "23423",
-      "description": "4324"
+      "id": "c73a",
+      "name": "Chiến Binh Rồng",
+      "description": "Tham gia vào cuộc chiến hành động nảy lửa để bảo vệ vương quốc.",
+      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1760890190/v9daivogxxzzvbxezht1.jpg",
+      "categoryId": "cat1"
     },
     {
-      "id": "20ff",
-      "name": "342",
-      "description": "23423"
+      "id": "1fc6",
+      "name": "Kho Báu Cổ Đại",
+      "description": "Phiêu lưu đến những hòn đảo bí ẩn và tìm kiếm kho báu bị mất.",
+      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1760891173/ox5h9cnomwqrz4izvjj0.jpg",
+      "categoryId": "cat2"
     },
     {
-      "id": "5268",
-      "name": "34",
-      "description": "234",
-      "image": ""
+      "id": "9459",
+      "name": "Rạp Phim Mini",
+      "description": "Xem hàng ngàn bộ phim và chương trình truyền hình hấp dẫn.",
+      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1760891376/dwju7n6vltsosnloyzdb.png",
+      "categoryId": "cat3"
+    },
+    {
+      "id": "6659",
+      "name": "Học Toán Vui",
+      "description": "Ứng dụng giúp trẻ em học toán qua các trò chơi tương tác.",
+      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1761287175/cfyilfx5a9hnange7cql.jpg",
+      "categoryId": "cat4"
+    },
+    {
+      "id": "287f",
+      "name": "Siêu Xạ Thủ",
+      "description": "Trở thành tay súng cừ khôi trong các nhiệm vụ hành động kịch tính.",
+      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1760893112/c4w6ftnucauhy5fqk3pi.ico",
+      "categoryId": "cat1"
+    },
+    {
+      "id": "9c6a",
+      "name": "Quản Lý Công Việc",
+      "description": "Công cụ hữu ích giúp bạn sắp xếp lịch trình và theo dõi tiến độ.",
+      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1760948532/dqgpzzrtd9cjvwb2wx7r.jpg",
+      "categoryId": "cat5"
+    },
+    {
+      "id": "f5b5",
+      "name": "Kết Nối Bạn Bè",
+      "description": "Mạng xã hội mới giúp bạn chia sẻ khoảnh khắc và kết nối với mọi người.",
+      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1760950895/indqyotu16z2khqwydk4.png",
+      "categoryId": "cat6"
+    },
+    {
+      "id": "9029",
+      "name": "Vượt Ngục",
+      "description": "Một cuộc phiêu lưu giải đố đầy thử thách để tìm đường thoát khỏi nhà tù.",
+      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1761287324/qtzzc8jnhtk190jp9iii.jpg",
+      "categoryId": "cat2"
+    },
+    {
+      "id": "86e5",
+      "name": "Music Flow",
+      "description": "Nghe nhạc trực tuyến với hàng triệu bài hát, tạo playlist của riêng bạn.",
+      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1761287444/h53jlqajizsdkypxopos.jpg",
+      "categoryId": "cat3"
+    },
+    {
+      "id": "3aae",
+      "name": "A",
+      "description": "A",
+      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1761290727/zgind3jlqwae2weq9ehl.jpg",
+      "categoryId": "cat1"
+    }
+  ],
+  "comments": [
+    {
+      "id": "e57e",
+      "appId": "c73a",
+      "userId": "15ca",
+      "userName": "Admin",
+      "text": "a",
+      "date": "2025-10-20",
+      "likes": 1,
+      "violated": true
+    },
+    {
+      "id": "49aa",
+      "appId": "1fc6",
+      "userId": "15ca",
+      "userName": "Admin",
+      "text": "423234",
+      "date": "2025-10-21",
+      "likes": 0,
+      "violated": false
+    },
+    {
+      "id": "4324",
+      "appId": "287f",
+      "userId": "15ca",
+      "userName": "Admin",
+      "text": "dfsafasdf",
+      "date": "2025-10-21",
+      "likes": 0,
+      "violated": false
+    },
+    {
+      "id": "e16d",
+      "appId": "287f",
+      "userId": "15ca",
+      "userName": "Admin",
+      "text": "adsfs",
+      "date": "2025-10-24",
+      "likes": 0
+    },
+    {
+      "id": "35f3",
+      "appId": "c73a",
+      "userId": "15ca",
+      "userName": "Admin",
+      "text": "3123",
+      "date": "2025-10-24",
+      "likes": 1
+    },
+    {
+      "id": "9424",
+      "appId": "9c6a",
+      "userId": "15ca",
+      "userName": "Admin",
+      "text": "fdasfds",
+      "date": "2025-10-24",
+      "likes": 1
+    },
+    {
+      "id": "6bc1",
+      "appId": "c73a",
+      "userId": "15ca",
+      "userName": "Admin",
+      "text": "adsf",
+      "date": "2025-10-24",
+      "likes": 0
+    },
+    {
+      "id": "bad5",
+      "appId": "c73a",
+      "userId": "15ca",
+      "userName": "Admin",
+      "text": "adf",
+      "date": "2025-10-24",
+      "likes": 0
+    },
+    {
+      "id": "7535",
+      "appId": "c73a",
+      "userId": "15ca",
+      "userName": "Admin",
+      "text": "fdsaf",
+      "date": "2025-10-24",
+      "likes": 0
+    },
+    {
+      "id": "a794",
+      "appId": "c73a",
+      "userId": "15ca",
+      "userName": "Admin",
+      "text": "ádf",
+      "date": "2025-10-24",
+      "likes": 0
+    },
+    {
+      "id": "ab42",
+      "appId": "9c6a",
+      "userId": "15ca",
+      "userName": "Admin",
+      "text": "sss",
+      "date": "2025-10-24",
+      "likes": 0
+    },
+    {
+      "id": "03b1",
+      "appId": "c73a",
+      "userId": "15ca",
+      "userName": "Admin",
+      "text": "aaa",
+      "date": "2025-10-24",
+      "likes": 1
+    },
+    {
+      "id": "fc13",
+      "appId": "c73a",
+      "userId": "15ca",
+      "userName": "Admin",
+      "text": "aaa",
+      "date": "2025-10-24",
+      "likes": 0
+    },
+    {
+      "id": "3ea8",
+      "appId": "c73a",
+      "userId": "763a",
+      "userName": "A",
+      "text": "a",
+      "date": "2025-10-24",
+      "likes": 1
+    },
+    {
+      "id": "75e0",
+      "appId": "c73a",
+      "userId": "763a",
+      "userName": "A",
+      "text": "a",
+      "date": "2025-10-24",
+      "likes": 0
+    }
+  ],
+  "commentLikes": [
+    {
+      "id": "7aba",
+      "commentId": null,
+      "userId": "8cd6",
+      "type": "like"
+    },
+    {
+      "id": "1dfc",
+      "commentId": "9424",
+      "userId": "15ca",
+      "type": "like"
+    },
+    {
+      "id": "c12d",
+      "commentId": "4324",
+      "userId": "15ca",
+      "type": "dislike"
+    },
+    {
+      "id": "e7c4",
+      "commentId": "e16d",
+      "userId": "15ca",
+      "type": "dislike"
+    },
+    {
+      "id": "a507",
+      "commentId": "35f3",
+      "userId": "763a",
+      "type": "dislike"
+    },
+    {
+      "id": "ea1e",
+      "commentId": "03b1",
+      "userId": "763a",
+      "type": "like"
+    },
+    {
+      "id": "1348",
+      "commentId": "3ea8",
+      "userId": "763a",
+      "type": "like"
+    },
+    {
+      "id": "3b73",
+      "commentId": "6bc1",
+      "userId": "763a",
+      "type": "dislike"
+    },
+    {
+      "id": "e38e",
+      "commentId": "03b1",
+      "userId": "15ca",
+      "type": "dislike"
+    },
+    {
+      "id": "dc79",
+      "commentId": "35f3",
+      "userId": "15ca",
+      "type": "like"
     }
   ]
 }

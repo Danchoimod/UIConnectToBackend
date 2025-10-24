@@ -4,25 +4,6 @@
       <div class="d-flex align-items-center flex-grow-1"></div>
 
       <div class="d-flex align-items-center gap-3">
-        <div class="position-relative">
-          <button class="btn btn-light btn-sm" type="button">
-            <i class="bi bi-bell me-2"></i>
-            <span class="badge bg-danger position-absolute top-0 start-100 translate-middle"
-              >3</span
-            >
-          </button>
-        </div>
-
-        <!-- Messages -->
-        <div class="position-relative">
-          <button class="btn btn-light btn-sm" type="button">
-            <i class="bi bi-envelope me-2"></i>
-            <span class="badge bg-danger position-absolute top-0 start-100 translate-middle"
-              >5</span
-            >
-          </button>
-        </div>
-
         <!-- Divider -->
         <div class="vr"></div>
 
@@ -63,15 +44,10 @@
   </nav>
 </template>
 
-<script>
-export default {
-  name: 'AdminNavbar',
-  data() {
-    return {
-      searchQuery: '',
-    }
-  },
-}
+<script setup>
+import { ref } from 'vue'
+
+const searchQuery = ref('')
 </script>
 
 <style scoped>

@@ -62,10 +62,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Carousel',
-}
+<script setup>
+// Carousel component
 </script>
 
 <style scoped>

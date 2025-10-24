@@ -21,6 +21,16 @@ const routes = [
     component: () => import('@/views/admin/Appmanager/AppList.vue'),
   },
   {
+    path: '/admin/apps/edit/:id',
+    name: 'EditApp',
+    component: () => import('@/views/admin/Appmanager/EditApp.vue'),
+  },
+  {
+    path: '/auth',
+    name: 'Auth',
+    component: () => import('@/views/Auth.vue'),
+  },
+  {
     path: '/admin/comments',
     name: 'CommentManager',
     component: () => import('@/views/admin/Commentmanager.vue'),
@@ -29,6 +39,16 @@ const routes = [
     path: '/admin/users/add',
     name: 'AddUser',
     component: () => import('@/views/admin/Usermanager/Adduser.vue'),
+  },
+  {
+    path: '/admin/users/edit/:id',
+    name: 'EditUser',
+    component: () => import('@/views/admin/Usermanager/EditUser.vue'),
+  },
+  {
+    path: '/app/:id',
+    name: 'AppDetail',
+    component: () => import('@/views/AppDetail.vue'),
   },
 ]
 

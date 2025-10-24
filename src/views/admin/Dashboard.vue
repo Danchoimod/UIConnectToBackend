@@ -10,7 +10,7 @@
 
       <!-- Stats Cards -->
       <div class="row mb-4">
-        <div class="col-md-3 mb-3">
+        <div class="col-md-4 mb-3">
           <div class="card border-0 shadow-sm">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-start">
@@ -26,13 +26,15 @@
           </div>
         </div>
 
-        <div class="col-md-3 mb-3">
+        <div class="col-md-4 mb-3">
           <div class="card border-0 shadow-sm">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-start">
                 <div>
-                  <p class="card-text text-muted mb-1">Tổng số lương ứng dụng</p>
-                  <h3 class="card-title mb-0">567</h3>
+                  <p class="card-text text-muted mb-1">Tổng số lượng ứng dụng</p>
+                  <h3 class="card-title mb-0">
+                    {{ (apps && apps.length) || 'Apps not found' }}
+                  </h3>
                 </div>
                 <i class="bi bi-box text-success" style="font-size: 2rem"></i>
               </div>
@@ -40,93 +42,17 @@
           </div>
         </div>
 
-        <div class="col-md-3 mb-3">
+        <div class="col-md-4 mb-3">
           <div class="card border-0 shadow-sm">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-start">
                 <div>
-                  <p class="card-text text-muted mb-1">Đơn hàng hôm nay</p>
-                  <h3 class="card-title mb-0">89</h3>
+                  <p class="card-text text-muted mb-1">Số lượng comment</p>
+                  <h3 class="card-title mb-0">
+                    {{ (comments && comments.length) || 'Comments not found' }}
+                  </h3>
                 </div>
-                <i class="bi bi-bag text-warning" style="font-size: 2rem"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-3 mb-3">
-          <div class="card border-0 shadow-sm">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <p class="card-text text-muted mb-1">Doanh thu</p>
-                  <h3 class="card-title mb-0">$12.5k</h3>
-                </div>
-                <i class="bi bi-currency-dollar text-danger" style="font-size: 2rem"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Charts & Tables -->
-      <div class="row">
-        <div class="col-lg-8 mb-4">
-          <div class="card border-0 shadow-sm">
-            <div class="card-header bg-white border-bottom">
-              <h5 class="mb-0">Đơn hàng gần đây</h5>
-            </div>
-            <div class="card-body">
-              <table class="table table-hover mb-0">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Khách hàng</th>
-                    <th>Trạng thái</th>
-                    <th>Ngày</th>
-                    <th>Tổng tiền</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>#001</td>
-                    <td>Nguyễn Văn A</td>
-                    <td><span class="badge bg-success">Thành công</span></td>
-                    <td>2025-10-15</td>
-                    <td>$500</td>
-                  </tr>
-                  <tr>
-                    <td>#002</td>
-                    <td>Trần Thị B</td>
-                    <td><span class="badge bg-warning text-dark">Đang xử lý</span></td>
-                    <td>2025-10-14</td>
-                    <td>$750</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 mb-4">
-          <div class="card border-0 shadow-sm">
-            <div class="card-header bg-white border-bottom">
-              <h5 class="mb-0">Hoạt động gần đây</h5>
-            </div>
-            <div class="card-body">
-              <div class="timeline">
-                <div class="timeline-item mb-3">
-                  <p class="mb-1"><small class="text-muted">10:30 AM</small></p>
-                  <p class="mb-0">Người dùng mới đã đăng ký</p>
-                </div>
-                <div class="timeline-item mb-3">
-                  <p class="mb-1"><small class="text-muted">09:15 AM</small></p>
-                  <p class="mb-0">Sản phẩm mới được thêm vào</p>
-                </div>
-                <div class="timeline-item">
-                  <p class="mb-1"><small class="text-muted">08:00 AM</small></p>
-                  <p class="mb-0">Đơn hàng được hoàn thành</p>
-                </div>
+                <i class="bi bi-chat-dots text-warning" style="font-size: 2rem"></i>
               </div>
             </div>
           </div>
@@ -137,16 +63,41 @@
 </template>
 
 <script setup>
-const users = ref([]) //tạo mảng chưa thông tin người dùng
-
+import { ref, onMounted } from 'vue'
 import { getUsers } from '@/api/Userservice.js'
 import AdminPanel from '@/layout/Sidebar.vue'
-import { onMounted } from 'vue'
 import axios from 'axios'
-import { ref } from 'vue'
+
+const users = ref([]) // Tạo mảng chứa thông tin người dùng
+const apps = ref([]) // Tạo mảng chứa thông tin ứng dụng
+const comments = ref([]) // Tạo mảng chứa thông tin comments
+
+const API_URL = 'http://localhost:3000'
+
+// Lấy danh sách ứng dụng
+const getApps = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/apps`)
+    apps.value = response.data
+  } catch (error) {
+    console.error('Error fetching apps:', error)
+  }
+}
+
+// Lấy danh sách comments
+const getComments = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/comments`)
+    comments.value = response.data
+  } catch (error) {
+    console.error('Error fetching comments:', error)
+  }
+}
 
 onMounted(async () => {
   users.value = await getUsers()
+  await getApps()
+  await getComments()
 })
 </script>
 
