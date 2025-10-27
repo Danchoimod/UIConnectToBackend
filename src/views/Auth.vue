@@ -94,10 +94,15 @@
                         v-model="reg.email"
                         type="email"
                         class="form-control"
-                        :class="{ 'is-invalid': registerSubmitted && !reg.email }"
+                        :class="{
+                          'is-invalid': (registerSubmitted && !reg.email) || registerEmailError,
+                        }"
                       />
                       <div v-if="registerSubmitted && !reg.email" class="invalid-feedback d-block">
                         Vui lòng nhập email
+                      </div>
+                      <div v-if="registerEmailError" class="invalid-feedback d-block">
+                        {{ registerEmailError }}
                       </div>
                     </div>
                   </div>
@@ -118,9 +123,12 @@
                       </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                      <label class="form-label">Avatar (tùy chọn)</label>
+                      <label class="form-label">Avatar <span class="text-danger">*</span></label>
                       <div>
-                        <label class="btn btn-outline-secondary">
+                        <label
+                          class="btn btn-outline-secondary"
+                          :class="{ 'border-danger': registerSubmitted && !reg.avatar }"
+                        >
                           <i class="bi bi-upload me-2"></i>Chọn ảnh
                           <input
                             type="file"
@@ -133,6 +141,9 @@
                           <span class="spinner-border spinner-border-sm me-1" role="status"></span
                           >Đang tải...
                         </span>
+                      </div>
+                      <div v-if="registerSubmitted && !reg.avatar" class="text-danger small mt-1">
+                        Vui lòng chọn ảnh đại diện
                       </div>
                       <div v-if="reg.avatar" class="mt-2">
                         <img
@@ -187,6 +198,7 @@ const loginSubmitted = ref(false)
 // Register state
 const reg = ref({ name: '', email: '', password: '', avatar: '', isAdmin: false })
 const registerError = ref('')
+const registerEmailError = ref('')
 const registering = ref(false)
 const registerSubmitted = ref(false)
 const uploading = ref(false)
@@ -211,7 +223,14 @@ async function handleLogin() {
     )
     if (res.data && res.data.length > 0) {
       const user = res.data[0]
-      localStorage.setItem(
+
+      // Kiểm tra tài khoản bị dừng
+      if (user.suspended) {
+        loginError.value = 'Tài khoản của bạn đã bị tạm dừng. Vui lòng liên hệ quản trị viên!'
+        return
+      }
+
+      sessionStorage.setItem(
         'user',
         JSON.stringify({
           id: user.id,
@@ -262,8 +281,13 @@ async function handleRegister() {
   if (registering.value || uploading.value) return
   registerSubmitted.value = true
   registerError.value = ''
+  registerEmailError.value = ''
+
   // Validate required fields
-  if (!reg.value.name || !reg.value.email || !reg.value.password) {
+  if (!reg.value.name || !reg.value.email || !reg.value.password || !reg.value.avatar) {
+    if (!reg.value.avatar) {
+      registerError.value = 'Vui lòng chọn ảnh đại diện!'
+    }
     return
   }
   registering.value = true
@@ -273,7 +297,7 @@ async function handleRegister() {
       `http://localhost:3000/users?email=${encodeURIComponent(reg.value.email)}`,
     )
     if (Array.isArray(existed.data) && existed.data.length > 0) {
-      registerError.value = 'Email đã tồn tại!'
+      registerEmailError.value = 'Email này đã được sử dụng!'
       registering.value = false
       return
     }
@@ -281,7 +305,7 @@ async function handleRegister() {
     const payload = { ...reg.value }
     const res = await axios.post('http://localhost:3000/users', payload)
     // Auto login after register
-    localStorage.setItem(
+    sessionStorage.setItem(
       'user',
       JSON.stringify({
         id: res.data.id,

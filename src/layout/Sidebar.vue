@@ -34,7 +34,7 @@
                     active-class="active"
                     to="/admin/users/add"
                   >
-                    <i class="bi bi-person-plus me-2"></i> Thêm người dùng
+                    <i class="bi bi-person-plus me-2"></i> Thêm nhân viên
                   </router-link>
                 </li>
                 <li class="nav-item mb-1">
@@ -117,15 +117,18 @@
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import AdminNavbar from '@/components/admin/AdminNavbar.vue'
+import axios from 'axios'
+import { useToast } from '@/composables/useToast'
 
 const router = useRouter()
+const toast = useToast()
 
-onMounted(() => {
-  // Kiểm tra localStorage khi component được mount
-  const user = localStorage.getItem('user')
+onMounted(async () => {
+  // Kiểm tra sessionStorage khi component được mount
+  const user = sessionStorage.getItem('user')
   if (!user) {
     // Không có thông tin đăng nhập
-    alert('Bạn cần đăng nhập để truy cập trang Admin!')
+    toast.error('Bạn cần đăng nhập để truy cập trang Admin!')
     router.push('/')
     return
   }
@@ -133,8 +136,21 @@ onMounted(() => {
   const userData = JSON.parse(user)
   if (!userData.isAdmin) {
     // Không có quyền admin
-    alert('Bạn không có quyền truy cập trang Admin!')
+    toast.error('Bạn không có quyền truy cập trang Admin!')
     router.push('/')
+    return
+  }
+
+  // Kiểm tra trạng thái tài khoản từ server
+  try {
+    const res = await axios.get(`http://localhost:3000/users/${userData.id}`)
+    if (res.data.suspended) {
+      sessionStorage.removeItem('user')
+      toast.error('Tài khoản của bạn đã bị tạm dừng!')
+      router.push('/')
+    }
+  } catch (e) {
+    console.error('Error checking user status:', e)
   }
 })
 
@@ -143,9 +159,9 @@ const goHome = () => {
 }
 
 const logout = () => {
-  // Xóa localStorage
-  localStorage.removeItem('user')
-  alert('Đã đăng xuất!')
+  // Xóa sessionStorage
+  sessionStorage.removeItem('user')
+  toast.success('Đã đăng xuất!')
   // Chuyển về trang chính
   router.push('/')
 }

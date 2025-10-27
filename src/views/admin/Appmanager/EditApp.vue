@@ -2,7 +2,7 @@
   <AdminPanel>
     <div class="container">
       <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3>Chỉnh sửa ứng dụng</h3>
+        <h3>{{ isViewMode ? 'Chi tiết ứng dụng' : 'Chỉnh sửa ứng dụng' }}</h3>
         <button class="btn btn-secondary" @click="goBack">
           <i class="bi bi-arrow-left me-2"></i>Quay lại
         </button>
@@ -13,11 +13,22 @@
           <form @submit.prevent="updateApp">
             <div class="mb-3">
               <label class="form-label">Tên ứng dụng</label>
-              <input v-model="editForm.name" type="text" class="form-control" required />
+              <input
+                v-model="editForm.name"
+                type="text"
+                class="form-control"
+                :disabled="isViewMode"
+                required
+              />
             </div>
             <div class="mb-3">
               <label class="form-label">Danh mục</label>
-              <select v-model="editForm.categoryId" class="form-select" required>
+              <select
+                v-model="editForm.categoryId"
+                class="form-select"
+                :disabled="isViewMode"
+                required
+              >
                 <option value="">-- Chọn danh mục --</option>
                 <option v-for="cat in categories" :key="cat.id" :value="cat.id">
                   {{ cat.name }}
@@ -26,7 +37,12 @@
             </div>
             <div class="mb-3">
               <label class="form-label">Mô tả</label>
-              <textarea v-model="editForm.description" class="form-control" rows="3"></textarea>
+              <textarea
+                v-model="editForm.description"
+                class="form-control"
+                rows="3"
+                :disabled="isViewMode"
+              ></textarea>
             </div>
             <div class="mb-3">
               <label class="form-label">Hình ảnh</label>
@@ -36,9 +52,10 @@
                   v-model="editForm.image"
                   class="form-control"
                   placeholder="URL ảnh"
+                  :disabled="isViewMode"
                 />
               </div>
-              <div>
+              <div v-if="!isViewMode">
                 <label class="btn btn-outline-primary">
                   <i class="bi bi-upload me-2"></i>Tải ảnh lên
                   <input type="file" class="d-none" @change="onEditFileChange" accept="image/*" />
@@ -57,7 +74,7 @@
                 />
               </div>
             </div>
-            <div class="d-flex gap-2">
+            <div v-if="!isViewMode" class="d-flex gap-2">
               <button type="submit" class="btn btn-primary" :disabled="uploading">
                 <i class="bi bi-save me-2"></i>Lưu thay đổi
               </button>
@@ -73,17 +90,22 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
 import AdminPanel from '@/layout/Sidebar.vue'
+import { useToast } from '@/composables/useToast'
 
 const router = useRouter()
 const route = useRoute()
+const toast = useToast()
 
 const editForm = ref({ id: '', name: '', description: '', image: '', categoryId: '' })
 const categories = ref([])
 const uploading = ref(false)
+
+// Kiểm tra xem có phải chế độ xem không
+const isViewMode = computed(() => route.query.mode === 'view')
 
 async function fetchCategories() {
   try {
@@ -100,7 +122,7 @@ async function fetchApp() {
     const res = await axios.get(`http://localhost:3000/apps/${id}`)
     editForm.value = res.data
   } catch (e) {
-    alert('Không thể tải thông tin ứng dụng!')
+    toast.error('Không thể tải thông tin ứng dụng!')
     goBack()
   }
 }
@@ -122,9 +144,9 @@ async function onEditFileChange(e) {
   try {
     const res = await axios.post(url, formData)
     editForm.value.image = res.data.secure_url
-    alert('Upload ảnh thành công!')
+    toast.success('Upload ảnh thành công!')
   } catch (err) {
-    alert('Upload ảnh thất bại!')
+    toast.error('Upload ảnh thất bại!')
   } finally {
     uploading.value = false
   }
@@ -132,15 +154,15 @@ async function onEditFileChange(e) {
 
 async function updateApp() {
   if (uploading.value) {
-    alert('Vui lòng đợi upload ảnh hoàn tất!')
+    toast.error('Vui lòng đợi upload ảnh hoàn tất!')
     return
   }
   try {
     await axios.put(`http://localhost:3000/apps/${editForm.value.id}`, editForm.value)
-    alert('Cập nhật thành công!')
+    toast.success('Cập nhật thành công!')
     goBack()
   } catch (e) {
-    alert('Cập nhật thất bại!')
+    toast.error('Cập nhật thất bại!')
   }
 }
 
@@ -170,6 +192,13 @@ function goBack() {
 .form-control:focus {
   border-color: #0d6efd;
   box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 .btn {

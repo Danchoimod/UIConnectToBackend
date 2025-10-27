@@ -79,8 +79,10 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+import { useToast } from '@/composables/useToast'
 
 const router = useRouter()
+const toast = useToast()
 
 const isLoggedIn = ref(false)
 const userName = ref('')
@@ -92,8 +94,8 @@ const categories = ref([])
 const searchQuery = ref('')
 
 onMounted(() => {
-  // Kiểm tra localStorage khi component được mount
-  const user = localStorage.getItem('user')
+  // Kiểm tra sessionStorage khi component được mount
+  const user = sessionStorage.getItem('user')
   if (user) {
     const userData = JSON.parse(user)
     isLoggedIn.value = true
@@ -151,20 +153,20 @@ const goToProfile = () => {
   if (isAdmin.value) {
     router.push('/admin')
   } else {
-    alert('Bạn không có quyền truy cập trang Admin!')
+    router.push('/profile')
   }
 }
 
 const logout = () => {
-  // Xóa localStorage
-  localStorage.removeItem('user')
+  // Xóa sessionStorage
+  sessionStorage.removeItem('user')
   isLoggedIn.value = false
   userName.value = ''
   userId.value = ''
   userAvatar.value = ''
   showDropdown.value = false
   isAdmin.value = false
-  alert('Đã đăng xuất!')
+  toast.success('Đã đăng xuất!')
 }
 </script>
 

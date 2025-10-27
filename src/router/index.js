@@ -50,6 +50,11 @@ const routes = [
     name: 'AppDetail',
     component: () => import('@/views/AppDetail.vue'),
   },
+  {
+    path: '/profile',
+    name: 'UserProfile',
+    component: () => import('@/views/user/UserProfile.vue'),
+  },
 ]
 
 export default createRouter({

@@ -54,6 +54,7 @@
                           :checked="!!user.isAdmin"
                           @change="toggleRole(user, 'isAdmin', $event.target.checked)"
                           :id="'adminSwitch-' + user.id"
+                          :disabled="user.email === 'admin@gmail.com'"
                         />
                         <label class="form-check-label" :for="'adminSwitch-' + user.id">
                           <span v-if="user.isAdmin" class="badge bg-danger">Admin</span>
@@ -71,22 +72,31 @@
                     </td>
                     <td>
                       <div class="d-flex gap-2">
-                        <button class="btn btn-sm btn-outline-primary" @click="editUser(user.id)">
-                          <i class="bi bi-pencil me-1"></i>Sửa
-                        </button>
+                        <!-- <button
+                          class="btn btn-sm btn-outline-primary"
+                          @click="editUser(user.id)"
+                          title="Sửa"
+                          :disabled="user.email === 'admin@gmail.com'"
+                        >
+                          <i class="bi bi-pencil"></i>
+                        </button> -->
                         <button
                           v-if="user.suspended"
                           class="btn btn-sm btn-outline-success"
                           @click="toggleSuspend(user.id, false)"
+                          title="Kích hoạt"
+                          :disabled="user.email === 'admin@gmail.com'"
                         >
-                          <i class="bi bi-play-circle me-1"></i>Kích hoạt
+                          <i class="bi bi-play-circle"></i>
                         </button>
                         <button
                           v-else
                           class="btn btn-sm btn-outline-warning"
                           @click="toggleSuspend(user.id, true)"
+                          title="Tạm dừng"
+                          :disabled="user.email === 'admin@gmail.com'"
                         >
-                          <i class="bi bi-pause-circle me-1"></i>Tạm dừng
+                          <i class="bi bi-pause-circle"></i>
                         </button>
                       </div>
                     </td>
@@ -107,8 +117,10 @@ import { useRouter } from 'vue-router'
 import axios from 'axios'
 import { getUsers } from '@/api/Userservice'
 import AdminPanel from '@/layout/Sidebar.vue'
+import { useToast } from '@/composables/useToast'
 
 const router = useRouter()
+const toast = useToast()
 const users = ref([])
 
 async function fetchUsers() {
@@ -120,31 +132,45 @@ async function fetchUsers() {
 onMounted(fetchUsers)
 
 function editUser(id) {
+  const user = users.value.find((u) => u.id === id)
+  if (user && user.email === 'admin@gmail.com') {
+    toast.error('Không thể chỉnh sửa tài khoản Admin chính!')
+    return
+  }
   router.push({ name: 'EditUser', params: { id } })
 }
 
 async function toggleRole(user, role, value) {
+  if (user.email === 'admin@gmail.com') {
+    toast.error('Không thể thay đổi vai trò của tài khoản Admin chính!')
+    return
+  }
   const updated = { ...user, [role]: value }
   try {
     await axios.put(`http://localhost:3000/users/${user.id}`, updated)
     await fetchUsers()
   } catch (e) {
-    alert('Cập nhật quyền thất bại!')
+    toast.error('Cập nhật quyền thất bại!')
   }
 }
 
 async function toggleSuspend(id, suspend) {
+  const user = users.value.find((u) => u.id === id)
+  if (user && user.email === 'admin@gmail.com') {
+    toast.error('Không thể tạm dừng tài khoản Admin chính!')
+    return
+  }
+
   const action = suspend ? 'tạm dừng' : 'kích hoạt lại'
   if (confirm(`Bạn có chắc muốn ${action} tài khoản này?`)) {
     try {
-      const user = users.value.find((u) => u.id === id)
       await axios.patch(`http://localhost:3000/users/${id}`, {
         suspended: suspend,
       })
       await fetchUsers()
-      alert(`Đã ${action} tài khoản!`)
+      toast.success(`Đã ${action} tài khoản!`)
     } catch (e) {
-      alert(`${action} thất bại!`)
+      toast.error(`${action} thất bại!`)
     }
   }
 }
@@ -206,6 +232,36 @@ async function toggleSuspend(id, suspend) {
   font-size: 0.875rem;
   border-radius: 6px;
   transition: all 0.3s ease;
+  position: relative;
+}
+
+.btn-sm:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  background-color: #333;
+  color: white;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  border-radius: 4px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.btn-sm:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #333;
+  z-index: 1000;
+  pointer-events: none;
 }
 
 .btn-outline-primary:hover {
@@ -237,6 +293,16 @@ async function toggleSuspend(id, suspend) {
 
 .form-check-input {
   cursor: pointer;
+}
+
+.form-check-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn-sm:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .modal-body {

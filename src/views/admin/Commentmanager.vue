@@ -87,6 +87,7 @@
                       class="btn btn-sm btn-warning"
                       @click="setViolation(comment.id, true)"
                       :disabled="processing === comment.id"
+                      title="Đánh dấu vi phạm"
                     >
                       <i
                         :class="
@@ -95,13 +96,13 @@
                             : 'bi bi-flag'
                         "
                       ></i>
-                      <span class="ms-1">Vi phạm</span>
                     </button>
                     <button
                       v-else
                       class="btn btn-sm btn-outline-success"
                       @click="setViolation(comment.id, false)"
                       :disabled="processing === comment.id"
+                      title="Bỏ đánh dấu vi phạm"
                     >
                       <i
                         :class="
@@ -110,7 +111,6 @@
                             : 'bi bi-arrow-counterclockwise'
                         "
                       ></i>
-                      <span class="ms-1">Bỏ vi phạm</span>
                     </button>
                   </td>
                 </tr>
@@ -126,12 +126,14 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import Sidebar from '@/layout/Sidebar.vue'
+import { useToast } from '@/composables/useToast'
 
 const comments = ref([])
 const apps = ref([])
 const loading = ref(false)
 const error = ref(null)
 const processing = ref(null)
+const toast = useToast()
 
 const API_URL = 'http://localhost:3000'
 
@@ -145,7 +147,7 @@ const fetchComments = async () => {
       throw new Error('Không thể tải danh sách đánh giá')
     }
     const data = await response.json()
-    // Sắp xếp theo ID giảm dần (mới nhất trên cùng)
+
     comments.value = data.sort((a, b) => b.id - a.id)
   } catch (err) {
     error.value = err.message
@@ -183,9 +185,9 @@ const setViolation = async (id, violated) => {
 
     // Cập nhật tại chỗ
     comments.value = comments.value.map((c) => (c.id === id ? { ...c, violated } : c))
-    alert(violated ? 'Đã đánh dấu bình luận vi phạm!' : 'Đã bỏ vi phạm bình luận!')
+    toast.success(violated ? 'Đã đánh dấu bình luận vi phạm!' : 'Đã bỏ vi phạm bình luận!')
   } catch (err) {
-    alert('Lỗi: ' + err.message)
+    toast.error('Lỗi: ' + err.message)
     console.error('Error updating violation:', err)
   } finally {
     processing.value = null
@@ -267,6 +269,36 @@ onMounted(() => {
   font-size: 0.875rem;
   border-radius: 6px;
   transition: all 0.3s ease;
+  position: relative;
+}
+
+.btn-sm:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  background-color: #333;
+  color: white;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  border-radius: 4px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.btn-sm:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #333;
+  z-index: 1000;
+  pointer-events: none;
 }
 
 .btn-danger:hover:not(:disabled) {

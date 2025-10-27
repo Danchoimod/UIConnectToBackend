@@ -18,11 +18,22 @@
             <span>{{ app.name }} - {{ app.description }}</span>
           </div>
           <div>
-            <button class="btn btn-sm btn-outline-primary me-2" @click="editApp(app.id)">
-              <i class="bi bi-pencil me-1"></i>Sửa
+            <button
+              class="btn btn-sm btn-outline-info me-2"
+              @click="viewDetail(app.id)"
+              title="Xem chi tiết"
+            >
+              <i class="bi bi-eye"></i>
             </button>
-            <button class="btn btn-sm btn-outline-danger" @click="deleteApp(app.id)">
-              <i class="bi bi-trash me-1"></i>Xóa
+            <button
+              class="btn btn-sm btn-outline-primary me-2"
+              @click="editApp(app.id)"
+              title="Sửa"
+            >
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger" @click="deleteApp(app.id)" title="Xóa">
+              <i class="bi bi-trash"></i>
             </button>
           </div>
         </li>
@@ -36,20 +47,26 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 import AdminPanel from '@/layout/Sidebar.vue'
+import { useToast } from '@/composables/useToast'
 
 const router = useRouter()
+const toast = useToast()
 const apps = ref([])
 
 async function fetchApps() {
   try {
     const res = await axios.get('http://localhost:3000/apps')
-    // Sắp xếp theo ID giảm dần (mới nhất trên cùng)
-    apps.value = res.data.sort((a, b) => b.id - a.id)
+    // Đảo ngược mảng để app mới nhất lên trên
+    apps.value = res.data.reverse()
   } catch (e) {
     apps.value = []
   }
 }
 onMounted(fetchApps)
+
+function viewDetail(id) {
+  router.push({ name: 'EditApp', params: { id }, query: { mode: 'view' } })
+}
 
 function editApp(id) {
   router.push({ name: 'EditApp', params: { id } })
@@ -60,9 +77,9 @@ async function deleteApp(id) {
     try {
       await axios.delete(`http://localhost:3000/apps/${id}`)
       await fetchApps()
-      alert('Đã xóa ứng dụng!')
+      toast.success('Đã xóa ứng dụng!')
     } catch (e) {
-      alert('Xóa thất bại!')
+      toast.error('Xóa thất bại!')
     }
   }
 }
@@ -71,5 +88,39 @@ async function deleteApp(id) {
 <style scoped>
 .list-group-item img {
   border: 1px solid #eee;
+}
+
+.btn-sm {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.btn-sm:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  background-color: #333;
+  color: white;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  border-radius: 4px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.btn-sm:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #333;
+  z-index: 1000;
+  pointer-events: none;
 }
 </style>

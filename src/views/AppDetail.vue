@@ -89,6 +89,7 @@
               v-for="comment in comments"
               :key="comment.id"
               class="mb-3 p-3 bg-white rounded shadow-sm"
+              v-show="!comment.violated"
             >
               <div class="d-flex align-items-center gap-2 mb-2">
                 <img
@@ -115,45 +116,38 @@
                   <div class="small text-muted">{{ comment.date }}</div>
                 </div>
               </div>
-              <template v-if="!comment.violated">
-                <div class="mb-2">{{ comment.text }}</div>
-                <div class="small text-muted mb-2">
-                  {{ comment.likes }} người thấy bài đánh giá này hữu ích
-                </div>
-                <div class="d-flex gap-2">
-                  <button
-                    class="btn btn-sm rounded-pill"
-                    :class="
-                      getUserLikeStatus(comment.id) === 'like'
-                        ? 'btn-success'
-                        : 'btn-outline-secondary'
-                    "
-                    @click="likeComment(comment.id)"
-                    :disabled="!currentUser || comment.violated"
-                  >
-                    <i class="bi bi-hand-thumbs-up me-1"></i>Có
-                    <span v-if="getUserLikeStatus(comment.id) === 'like'">✓</span>
-                  </button>
-                  <button
-                    class="btn btn-sm rounded-pill"
-                    :class="
-                      getUserLikeStatus(comment.id) === 'dislike'
-                        ? 'btn-danger'
-                        : 'btn-outline-secondary'
-                    "
-                    @click="dislikeComment(comment.id)"
-                    :disabled="!currentUser || comment.violated"
-                  >
-                    <i class="bi bi-hand-thumbs-down me-1"></i>Không
-                    <span v-if="getUserLikeStatus(comment.id) === 'dislike'">✓</span>
-                  </button>
-                </div>
-              </template>
-              <template v-else>
-                <div class="alert alert-warning py-2 mb-0">
-                  Bình luận này đã bị đánh dấu vi phạm bởi quản trị viên.
-                </div>
-              </template>
+              <div class="mb-2">{{ comment.text }}</div>
+              <div class="small text-muted mb-2">
+                {{ comment.likes }} người thấy bài đánh giá này hữu ích
+              </div>
+              <div class="d-flex gap-2">
+                <button
+                  class="btn btn-sm rounded-pill"
+                  :class="
+                    getUserLikeStatus(comment.id) === 'like'
+                      ? 'btn-success'
+                      : 'btn-outline-secondary'
+                  "
+                  @click="likeComment(comment.id)"
+                  :disabled="!currentUser || comment.violated"
+                >
+                  <i class="bi bi-hand-thumbs-up me-1"></i>Có
+                  <span v-if="getUserLikeStatus(comment.id) === 'like'">✓</span>
+                </button>
+                <button
+                  class="btn btn-sm rounded-pill"
+                  :class="
+                    getUserLikeStatus(comment.id) === 'dislike'
+                      ? 'btn-danger'
+                      : 'btn-outline-secondary'
+                  "
+                  @click="dislikeComment(comment.id)"
+                  :disabled="!currentUser || comment.violated"
+                >
+                  <i class="bi bi-hand-thumbs-down me-1"></i>Không
+                  <span v-if="getUserLikeStatus(comment.id) === 'dislike'">✓</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -171,8 +165,10 @@ import { useRoute } from 'vue-router'
 import axios from 'axios'
 import navbar from '@/components/common/navbar.vue'
 import footer from '@/components/common/footer.vue'
+import { useToast } from '@/composables/useToast'
 
 const route = useRoute()
+const toast = useToast()
 const app = ref({})
 const commentInput = ref('')
 const comments = ref([])
@@ -201,8 +197,8 @@ onMounted(async () => {
     }
   }
 
-  // Lấy thông tin user từ localStorage
-  const user = localStorage.getItem('user')
+  // Lấy thông tin user từ sessionStorage
+  const user = sessionStorage.getItem('user')
   if (user) {
     currentUser.value = JSON.parse(user)
   }
@@ -219,18 +215,20 @@ async function fetchUsers() {
 
 async function fetchComments() {
   try {
-    const res = await axios.get(
-      `http://localhost:3000/comments?appId=${route.params.id}&_sort=id&_order=desc`,
-    )
-    // Thêm avatar và suspended status cho từng comment
-    comments.value = res.data.map((comment) => {
-      const user = users.value.find((u) => u.id === comment.userId)
-      return {
-        ...comment,
-        userAvatar: user?.avatar || null,
-        userSuspended: user?.suspended || false,
-      }
-    })
+    const res = await axios.get(`http://localhost:3000/comments?appId=${route.params.id}`)
+    // Thêm avatar và suspended status cho từng comment, chỉ lấy comment của user chưa bị ban
+    // Đảo ngược mảng để comment mới nhất lên trên
+    comments.value = res.data
+      .map((comment) => {
+        const user = users.value.find((u) => u.id === comment.userId)
+        return {
+          ...comment,
+          userAvatar: user?.avatar || null,
+          userSuspended: user?.suspended || false,
+        }
+      })
+      .filter((comment) => !comment.userSuspended)
+      .reverse()
   } catch (e) {
     comments.value = []
   }
@@ -245,7 +243,6 @@ async function fetchCommentLikes() {
   }
 }
 
-// Kiểm tra trạng thái like/dislike của user cho comment
 function getUserLikeStatus(commentId) {
   if (!currentUser.value) return null
   const like = commentLikes.value.find(
@@ -256,7 +253,7 @@ function getUserLikeStatus(commentId) {
 
 async function likeComment(commentId) {
   if (!currentUser.value) {
-    alert('Bạn cần đăng nhập để đánh giá!')
+    toast.error('Bạn cần đăng nhập để đánh giá!')
     return
   }
 
@@ -267,19 +264,16 @@ async function likeComment(commentId) {
   try {
     let newLikes = comment.likes
 
-    // Tìm bản ghi like hiện tại của user
     const existingLike = commentLikes.value.find(
       (l) => l.commentId === commentId && l.userId === currentUser.value.id,
     )
 
     if (currentStatus === 'like') {
-      // Đã like rồi, bỏ like
       newLikes = Math.max(0, comment.likes - 1)
       if (existingLike) {
         await axios.delete(`http://localhost:3000/commentLikes/${existingLike.id}`)
       }
     } else if (currentStatus === 'dislike') {
-      // Đang dislike, chuyển sang like
       newLikes = comment.likes + 1
       if (existingLike) {
         await axios.patch(`http://localhost:3000/commentLikes/${existingLike.id}`, {
@@ -287,7 +281,6 @@ async function likeComment(commentId) {
         })
       }
     } else {
-      // Chưa có action, thêm like mới
       newLikes = comment.likes + 1
       await axios.post('http://localhost:3000/commentLikes', {
         commentId: commentId,
@@ -296,23 +289,21 @@ async function likeComment(commentId) {
       })
     }
 
-    // Cập nhật số likes của comment
     await axios.patch(`http://localhost:3000/comments/${commentId}`, {
       likes: newLikes,
     })
 
-    // Refresh dữ liệu
     await fetchComments()
     await fetchCommentLikes()
   } catch (e) {
     console.error('Like error:', e)
-    alert('Thao tác thất bại!')
+    toast.error('Thao tác thất bại!')
   }
 }
 
 async function dislikeComment(commentId) {
   if (!currentUser.value) {
-    alert('Bạn cần đăng nhập để đánh giá!')
+    toast.error('Bạn cần đăng nhập để đánh giá!')
     return
   }
 
@@ -360,18 +351,18 @@ async function dislikeComment(commentId) {
     await fetchCommentLikes()
   } catch (e) {
     console.error('Dislike error:', e)
-    alert('Thao tác thất bại!')
+    toast.error('Thao tác thất bại!')
   }
 }
 
 async function addComment() {
   if (!currentUser.value) {
-    alert('Bạn cần đăng nhập để bình luận!')
+    toast.error('Bạn cần đăng nhập để bình luận!')
     return
   }
 
   if (!commentInput.value.trim()) {
-    alert('Vui lòng nhập nội dung bình luận!')
+    toast.error('Vui lòng nhập nội dung bình luận!')
     return
   }
 
@@ -391,9 +382,9 @@ async function addComment() {
     await fetchUsers()
     // Sau đó refresh comments
     await fetchComments()
-    alert('Đã thêm bình luận!')
+    toast.success('Đã thêm bình luận!')
   } catch (e) {
-    alert('Thêm bình luận thất bại!')
+    toast.error('Thêm bình luận thất bại!')
   }
 }
 </script>

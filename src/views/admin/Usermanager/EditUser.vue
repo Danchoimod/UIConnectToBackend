@@ -19,7 +19,16 @@
                 </div>
                 <div class="col-md-6 mb-3">
                   <label class="form-label">Email</label>
-                  <input v-model="editForm.email" type="email" class="form-control" required />
+                  <input
+                    v-model="editForm.email"
+                    type="email"
+                    class="form-control"
+                    :class="{ 'is-invalid': emailError }"
+                    required
+                  />
+                  <div v-if="emailError" class="invalid-feedback d-block">
+                    {{ emailError }}
+                  </div>
                 </div>
               </div>
 
@@ -95,13 +104,17 @@ import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
 import AdminPanel from '@/layout/Sidebar.vue'
+import { useToast } from '@/composables/useToast'
 
 const router = useRouter()
 const route = useRoute()
+const toast = useToast()
 
 const editForm = ref({ id: '', name: '', email: '', password: '', avatar: '', isAdmin: false })
 const originalPassword = ref('')
+const originalEmail = ref('')
 const uploading = ref(false)
+const emailError = ref('')
 
 async function fetchUser() {
   try {
@@ -109,8 +122,9 @@ async function fetchUser() {
     const res = await axios.get(`http://localhost:3000/users/${id}`)
     editForm.value = { ...res.data, password: '' }
     originalPassword.value = res.data.password
+    originalEmail.value = res.data.email
   } catch (e) {
-    alert('Không thể tải thông tin người dùng!')
+    toast.error('Không thể tải thông tin người dùng!')
     goBack()
   }
 }
@@ -131,22 +145,37 @@ async function onFileChange(e) {
   try {
     const res = await axios.post(url, formData)
     editForm.value.avatar = res.data.secure_url
-    alert('Upload avatar thành công!')
+    toast.success('Upload avatar thành công!')
   } catch (err) {
     console.error('Upload error:', err)
-    alert('Upload ảnh thất bại!')
+    toast.error('Upload ảnh thất bại!')
   } finally {
     uploading.value = false
   }
 }
 
 async function updateUser() {
+  emailError.value = ''
+
   if (uploading.value) {
-    alert('Vui lòng đợi upload ảnh hoàn tất!')
+    toast.error('Vui lòng đợi upload ảnh hoàn tất!')
     return
   }
 
   try {
+    // Kiểm tra email trùng nếu email đã thay đổi
+    if (editForm.value.email !== originalEmail.value) {
+      const checkEmail = await axios.get(
+        `http://localhost:3000/users?email=${editForm.value.email}`,
+      )
+      // Lọc bỏ user hiện tại khỏi kết quả tìm kiếm
+      const duplicateEmail = checkEmail.data.filter((u) => u.id !== editForm.value.id)
+      if (duplicateEmail.length > 0) {
+        emailError.value = 'Email này đã được sử dụng!'
+        return
+      }
+    }
+
     // Tạo object để update, nếu password rỗng thì giữ password cũ
     const updateData = { ...editForm.value }
     if (!updateData.password || updateData.password.trim() === '') {
@@ -154,11 +183,11 @@ async function updateUser() {
     }
 
     await axios.put(`http://localhost:3000/users/${editForm.value.id}`, updateData)
-    alert('Cập nhật thành công!')
+    toast.success('Cập nhật thành công!')
     goBack()
   } catch (e) {
     console.error('Update error:', e)
-    alert('Cập nhật thất bại!')
+    toast.error('Cập nhật thất bại!')
   }
 }
 

@@ -6,43 +6,50 @@
       "email": "admin@gmail.com",
       "password": "1",
       "isAdmin": true,
-      "avatar": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1760891376/dwju7n6vltsosnloyzdb.png"
+      "avatar": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1760891376/dwju7n6vltsosnloyzdb.png",
+      "suspended": false
     },
     {
-      "id": "8cd6",
-      "name": "Nguyễn Văn A",
+      "name": "User",
       "email": "user@gmail.com",
-      "password": "1",
+      "avatar": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1761507295/mvjek5jzytw8eb8hgeqr.jpg",
       "isAdmin": false,
-      "avatar": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1760949798/wgztyaatrfrzl0pbkgxd.jpg",
+      "password": "1",
+      "id": "6c4c",
       "suspended": true
     },
     {
-      "id": "7b27",
-      "name": "mod",
-      "email": "admin1@gmail.com",
+      "id": "1f97",
+      "name": "12",
+      "email": "b@gmail.co",
+      "password": "aa",
+      "isAdmin": false,
+      "avatar": ""
+    },
+    {
+      "id": "cf22",
+      "name": "a",
+      "email": "b2@gmail.co",
       "password": "1",
-      "avatar": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1761281976/lxntb518utak8igdrtv4.ico",
+      "isAdmin": false,
+      "avatar": ""
+    },
+    {
+      "id": "80aa",
+      "name": "user",
+      "email": "user1@gmail.com",
+      "password": "1",
+      "avatar": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1761551368/y0iax1dnv403h6npztrn.ico",
       "isAdmin": false,
       "suspended": true
     },
     {
-      "id": "763a",
-      "name": "A",
-      "email": "a@gmail.com",
+      "id": "7360",
+      "name": "a",
+      "email": "b1@gmail.co",
       "password": "1",
-      "avatar": "",
       "isAdmin": false,
-      "suspended": true
-    },
-    {
-      "id": "a1ee",
-      "name": "Nguyễn Văn A",
-      "email": "admin@gmail.com",
-      "password": "1",
-      "isAdmin": true,
-      "avatar": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1761290496/bqgfsknhschxcpgilipb.jpg",
-      "suspended": true
+      "avatar": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1761551520/w5emvu5ojq4xkssmeglq.ico"
     }
   ],
   "categories": [
@@ -79,276 +86,142 @@
   ],
   "apps": [
     {
-      "id": "c73a",
-      "name": "Chiến Binh Rồng",
-      "description": "Tham gia vào cuộc chiến hành động nảy lửa để bảo vệ vương quốc.",
-      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1760890190/v9daivogxxzzvbxezht1.jpg",
+      "id": "3289",
+      "name": "Sky Battle",
+      "description": "Trò chơi bắn máy bay hấp dẫn với đồ họa 3D mượt mà.",
+      "image": "https://play-lh.googleusercontent.com/sqkMNHhCFKsarr9tDYmt3mBAPBCU6li0fGGW-cB8TE5sFOVg6I5RY5tRtYnL1TmhF7lpFJYVfAYd7q65VqA",
       "categoryId": "cat1"
     },
     {
-      "id": "1fc6",
-      "name": "Kho Báu Cổ Đại",
-      "description": "Phiêu lưu đến những hòn đảo bí ẩn và tìm kiếm kho báu bị mất.",
-      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1760891173/ox5h9cnomwqrz4izvjj0.jpg",
+      "id": "3921",
+      "name": "Lost Island",
+      "description": "Khám phá hòn đảo bí ẩn và giải mã các câu đố cổ xưa.",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuGkRk3x7vHCia4KRWBv_-KOBwlC8CBWo30Q&s",
       "categoryId": "cat2"
     },
     {
-      "id": "9459",
-      "name": "Rạp Phim Mini",
-      "description": "Xem hàng ngàn bộ phim và chương trình truyền hình hấp dẫn.",
-      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1760891376/dwju7n6vltsosnloyzdb.png",
+      "id": "4153",
+      "name": "FunnyCam",
+      "description": "Ứng dụng quay video hài hước với hiệu ứng biến dạng khuôn mặt.",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlzHFLaPvahfn_MKW_SAtnnvREwANPUoVbpA&s",
       "categoryId": "cat3"
     },
     {
-      "id": "6659",
-      "name": "Học Toán Vui",
-      "description": "Ứng dụng giúp trẻ em học toán qua các trò chơi tương tác.",
-      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1761287175/cfyilfx5a9hnange7cql.jpg",
+      "id": "4280",
+      "name": "Learn English Kids",
+      "description": "Học tiếng Anh qua trò chơi, bài hát và hình ảnh sinh động.",
+      "image": "https://play-lh.googleusercontent.com/nOJwyFmAi19LvdMhiKUPEHwaWFYHGXHI43p79ii8Ej8koFam6UWThw3Oc0cWXph8sg",
       "categoryId": "cat4"
     },
     {
-      "id": "287f",
-      "name": "Siêu Xạ Thủ",
-      "description": "Trở thành tay súng cừ khôi trong các nhiệm vụ hành động kịch tính.",
-      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1760893112/c4w6ftnucauhy5fqk3pi.ico",
-      "categoryId": "cat1"
-    },
-    {
-      "id": "9c6a",
-      "name": "Quản Lý Công Việc",
-      "description": "Công cụ hữu ích giúp bạn sắp xếp lịch trình và theo dõi tiến độ.",
-      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1760948532/dqgpzzrtd9cjvwb2wx7r.jpg",
+      "id": "4390",
+      "name": "Quick Note",
+      "description": "Ghi chú nhanh, tự động lưu và đồng bộ đám mây.",
+      "image": "https://play-lh.googleusercontent.com/hP0P9e1E14M4DjzLN0BNP_v_mNKKLH4eK1F9gdDp05B6_YB_t3bIh-ZAsPjGElDFIQ",
       "categoryId": "cat5"
     },
     {
-      "id": "f5b5",
-      "name": "Kết Nối Bạn Bè",
-      "description": "Mạng xã hội mới giúp bạn chia sẻ khoảnh khắc và kết nối với mọi người.",
-      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1760950895/indqyotu16z2khqwydk4.png",
+      "id": "4411",
+      "name": "ChatWorld",
+      "description": "Kết nối với bạn bè trên toàn thế giới qua phòng chat công khai.",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSttX_Vomn0A_uqmD2g_bs_9_fXzXKrYdIJ0Q&s",
       "categoryId": "cat6"
     },
     {
-      "id": "9029",
-      "name": "Vượt Ngục",
-      "description": "Một cuộc phiêu lưu giải đố đầy thử thách để tìm đường thoát khỏi nhà tù.",
-      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1761287324/qtzzc8jnhtk190jp9iii.jpg",
+      "id": "4520",
+      "name": "Zombie Rush",
+      "description": "Sinh tồn giữa thành phố đầy zombie và nâng cấp vũ khí của bạn.",
+      "image": "https://play-lh.googleusercontent.com/ikzqfWg_tsfdzXNPbCKdNSDqEvNeryzCFi1rGArx6A_YYzyjJzeWXplY6cVgPX0xb18",
+      "categoryId": "cat1"
+    },
+    {
+      "id": "4677",
+      "name": "Explorer 3D",
+      "description": "Thám hiểm các vùng đất mới trong thế giới mở 3D tuyệt đẹp.",
+      "image": "https://www.3dcadbrowser.com/th/1/136/136745.webp",
       "categoryId": "cat2"
     },
     {
-      "id": "86e5",
-      "name": "Music Flow",
-      "description": "Nghe nhạc trực tuyến với hàng triệu bài hát, tạo playlist của riêng bạn.",
-      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1761287444/h53jlqajizsdkypxopos.jpg",
+      "id": "4759",
+      "name": "MovieBox",
+      "description": "Xem trailer và đánh giá phim hot nhất tuần.",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSR3XmcMvt3YO2Bm-PIeTbB40wqrRX4W77hw&s",
       "categoryId": "cat3"
     },
     {
-      "id": "3aae",
-      "name": "A",
-      "description": "A",
-      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1761290727/zgind3jlqwae2weq9ehl.jpg",
-      "categoryId": "cat1"
+      "id": "4892",
+      "name": "Toolify",
+      "description": "Bộ sưu tập công cụ hữu ích: chuyển đổi, nén, đo lường, và nhiều hơn nữa.",
+      "image": "https://ph-files.imgix.net/24d489c2-6d42-48ee-86ed-4818ae55ef6e.jpeg?auto=format",
+      "categoryId": "cat5"
+    },
+    {
+      "id": "84ff",
+      "name": "aa333",
+      "description": "aa",
+      "image": "https://res.cloudinary.com/dhdke5ku8/image/upload/v1761551682/fmeitytde46olju1am1t.ico",
+      "categoryId": "cat2"
     }
   ],
   "comments": [
     {
-      "id": "e57e",
-      "appId": "c73a",
-      "userId": "15ca",
-      "userName": "Admin",
+      "id": "21e8",
+      "appId": "4892",
+      "userId": "6c4c",
+      "userName": "User",
       "text": "a",
-      "date": "2025-10-20",
+      "date": "2025-10-26",
       "likes": 1,
       "violated": true
     },
     {
-      "id": "49aa",
-      "appId": "1fc6",
+      "id": "4f5c",
+      "appId": "4411",
       "userId": "15ca",
       "userName": "Admin",
-      "text": "423234",
-      "date": "2025-10-21",
-      "likes": 0,
-      "violated": false
-    },
-    {
-      "id": "4324",
-      "appId": "287f",
-      "userId": "15ca",
-      "userName": "Admin",
-      "text": "dfsafasdf",
-      "date": "2025-10-21",
-      "likes": 0,
-      "violated": false
-    },
-    {
-      "id": "e16d",
-      "appId": "287f",
-      "userId": "15ca",
-      "userName": "Admin",
-      "text": "adsfs",
-      "date": "2025-10-24",
-      "likes": 0
-    },
-    {
-      "id": "35f3",
-      "appId": "c73a",
-      "userId": "15ca",
-      "userName": "Admin",
-      "text": "3123",
-      "date": "2025-10-24",
-      "likes": 1
-    },
-    {
-      "id": "9424",
-      "appId": "9c6a",
-      "userId": "15ca",
-      "userName": "Admin",
-      "text": "fdasfds",
-      "date": "2025-10-24",
-      "likes": 1
-    },
-    {
-      "id": "6bc1",
-      "appId": "c73a",
-      "userId": "15ca",
-      "userName": "Admin",
-      "text": "adsf",
-      "date": "2025-10-24",
-      "likes": 0
-    },
-    {
-      "id": "bad5",
-      "appId": "c73a",
-      "userId": "15ca",
-      "userName": "Admin",
-      "text": "adf",
-      "date": "2025-10-24",
-      "likes": 0
-    },
-    {
-      "id": "7535",
-      "appId": "c73a",
-      "userId": "15ca",
-      "userName": "Admin",
-      "text": "fdsaf",
-      "date": "2025-10-24",
-      "likes": 0
-    },
-    {
-      "id": "a794",
-      "appId": "c73a",
-      "userId": "15ca",
-      "userName": "Admin",
-      "text": "ádf",
-      "date": "2025-10-24",
-      "likes": 0
-    },
-    {
-      "id": "ab42",
-      "appId": "9c6a",
-      "userId": "15ca",
-      "userName": "Admin",
-      "text": "sss",
-      "date": "2025-10-24",
-      "likes": 0
-    },
-    {
-      "id": "03b1",
-      "appId": "c73a",
-      "userId": "15ca",
-      "userName": "Admin",
-      "text": "aaa",
-      "date": "2025-10-24",
-      "likes": 1
-    },
-    {
-      "id": "fc13",
-      "appId": "c73a",
-      "userId": "15ca",
-      "userName": "Admin",
-      "text": "aaa",
-      "date": "2025-10-24",
-      "likes": 0
-    },
-    {
-      "id": "3ea8",
-      "appId": "c73a",
-      "userId": "763a",
-      "userName": "A",
       "text": "a",
-      "date": "2025-10-24",
+      "date": "2025-10-26",
+      "likes": 0,
+      "violated": true
+    },
+    {
+      "id": "a030",
+      "appId": "4892",
+      "userId": "6c4c",
+      "userName": "User",
+      "text": "12",
+      "date": "2025-10-27",
       "likes": 1
     },
     {
-      "id": "75e0",
-      "appId": "c73a",
-      "userId": "763a",
-      "userName": "A",
+      "id": "fe10",
+      "appId": "4892",
+      "userId": "80aa",
+      "userName": "user",
       "text": "a",
-      "date": "2025-10-24",
-      "likes": 0
+      "date": "2025-10-27",
+      "likes": 0,
+      "violated": true
     }
   ],
   "commentLikes": [
     {
-      "id": "7aba",
-      "commentId": null,
-      "userId": "8cd6",
-      "type": "like"
-    },
-    {
-      "id": "1dfc",
-      "commentId": "9424",
+      "id": "122a",
+      "commentId": "21e8",
       "userId": "15ca",
       "type": "like"
     },
     {
-      "id": "c12d",
-      "commentId": "4324",
-      "userId": "15ca",
-      "type": "dislike"
-    },
-    {
-      "id": "e7c4",
-      "commentId": "e16d",
-      "userId": "15ca",
-      "type": "dislike"
-    },
-    {
-      "id": "a507",
-      "commentId": "35f3",
-      "userId": "763a",
-      "type": "dislike"
-    },
-    {
-      "id": "ea1e",
-      "commentId": "03b1",
-      "userId": "763a",
+      "id": "da1d",
+      "commentId": "a030",
+      "userId": "80aa",
       "type": "like"
     },
     {
-      "id": "1348",
-      "commentId": "3ea8",
-      "userId": "763a",
-      "type": "like"
-    },
-    {
-      "id": "3b73",
-      "commentId": "6bc1",
-      "userId": "763a",
+      "id": "6981",
+      "commentId": "21e8",
+      "userId": "80aa",
       "type": "dislike"
-    },
-    {
-      "id": "e38e",
-      "commentId": "03b1",
-      "userId": "15ca",
-      "type": "dislike"
-    },
-    {
-      "id": "dc79",
-      "commentId": "35f3",
-      "userId": "15ca",
-      "type": "like"
     }
   ]
 }

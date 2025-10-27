@@ -79,8 +79,8 @@ const itemsPerPage = 8
 async function fetchApps() {
   try {
     const res = await axios.get('http://localhost:3000/apps')
-    // Sắp xếp theo ID giảm dần (mới nhất trên cùng)
-    apps.value = res.data.sort((a, b) => b.id - a.id)
+
+    apps.value = res.data.reverse()
   } catch (e) {
     apps.value = []
   }
